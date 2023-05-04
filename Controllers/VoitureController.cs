@@ -67,7 +67,7 @@ namespace VoitureExpress.Controllers
             return View(voiture);
         }
 
-        // GET: Voitures/Edit/5
+        // GET: Voiture/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Voiture == null)
@@ -118,7 +118,7 @@ namespace VoitureExpress.Controllers
             return View(voiture);
         }
 
-        // GET: Voitures/Delete/5
+        // GET: Voiture/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Voiture == null)
