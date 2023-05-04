@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+@model IEnumerable<Voiture>
+
+<h2>Liste des voitures</h2>
+
+<
+
+   {
+    <ul>
+    @if (Model != null)
+        @foreach (var voiture in Model)
+        {
+            <li>
+                <h3>@voiture.Marque @voiture.Modele</h3>
+                <p>Année : @voiture.Annee</p>
+                <p>Finition : @voiture.Finition</p>
+                <p>Date d'achat : @voiture.DateAchat</p>
+                <p>Prix : @voiture.Prix</p>
+                <p>Réparations : @voiture.Réparations</p>
+                <p>Coûts de réparations : @voiture.CoûtsDeRéparations</p>
+                <p>Disponibilité : @voiture.Disponibilité</p>
+                <p>Prix de vente : @voiture.PrixDeVente</p>
+                <p>Date de vente : @voiture.DateDeVente</p>
+        </li>
+    }
+</ul>
