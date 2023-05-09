@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VoitureExpress.Data;
 using VoitureExpress.Models;
+
+
+{
+
+}
 
 namespace VoitureExpress.Controllers
 {
@@ -177,6 +178,14 @@ namespace VoitureExpress.Controllers
             return View(await voitures.ToListAsync());
         }
 
+        /*public IActionResult ListeInterventions(int idVoiture)
+        {
+            var interventions = _context.Interventions.Where(i => i.VoitureId== idVoiture).ToList();
+            return View(interventions);
+        }*/
+
+
     }
+
 
 }

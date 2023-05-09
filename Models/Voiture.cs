@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VoitureExpress.Models
 {
@@ -12,6 +12,7 @@ namespace VoitureExpress.Models
             Interventions = new HashSet<Interventions>();
         }
         [Key]
+        [Column("VoitureId")]
         public int Id { get; set; }
         public string Marque { get; set; }
         public string Modele { get; set; }
@@ -32,17 +33,6 @@ namespace VoitureExpress.Models
 }
 
 
-    
-    
 
-
-
-
-
-
-
-    // Autres propriétés de voitures
-
-    // Constructeur par défaut
 
 
