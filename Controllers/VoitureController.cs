@@ -5,9 +5,7 @@ using VoitureExpress.Data;
 using VoitureExpress.Models;
 
 
-{
 
-}
 
 namespace VoitureExpress.Controllers
 {
