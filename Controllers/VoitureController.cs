@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoitureExpress.Data;
@@ -45,6 +46,7 @@ namespace VoitureExpress.Controllers
         }
 
         // GET: Voitures/Create
+
         public IActionResult Create()
         {
             return View();
@@ -55,6 +57,7 @@ namespace VoitureExpress.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Marque,Modele,Annee,Finition,DateAchat,Prix,Réparations,CoûtsDeRéparations,Disponibilité,PrixDeVente,DateDeVente")] Voiture voiture)
         {
             if (ModelState.IsValid)
@@ -118,6 +121,7 @@ namespace VoitureExpress.Controllers
         }
 
         // GET: Voiture/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Voitures == null)
