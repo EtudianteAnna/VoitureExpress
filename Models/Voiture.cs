@@ -6,11 +6,7 @@ namespace VoitureExpress.Models
     public class Voiture
 
     {
-        public Voiture()
-        {
-            Reparations = new HashSet<Reparations>();
-            Interventions = new HashSet<Interventions>();
-        }
+        
         [Key]
         [Column("VoitureId")]
         public int Id { get; set; }
@@ -24,9 +20,9 @@ namespace VoitureExpress.Models
         public decimal CoûtsDeRéparations { get; set; }
         public bool Disponibilité { get; set; }
         public decimal PrixDeVente { get; set; }
-        public DateTime? DateDeVente { get; set; }
-        public virtual ICollection<Reparations> Reparations { get; set; }
-        public virtual ICollection<Interventions> Interventions { get; set; }
+        public DateTime DateDeVente { get; set; }
+        
+        public virtual ICollection<Interventions>? Interventions { get; set; }
 
     }
 

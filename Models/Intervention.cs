@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations;
         public DateTime DateIntervention { get; set; }
 
         public int VoitureId { get; set; }
-        public virtual Voiture Voiture { get; set; }
+        public Voiture Voiture { get; set; }
     }
 
     public class Reparations : Intervention
@@ -25,7 +25,7 @@ using System.ComponentModel.DataAnnotations;
         public new DateTime DateIntervention { get; set; }
 
         // Propriété de navigation vers la classe Reparations
-        public virtual Reparations Reparations { get; set; }
+        
     }
 }
 

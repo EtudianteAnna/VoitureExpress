@@ -21,20 +21,20 @@ namespace VoitureExpress.Controllers
         // GET: Voitures
         public async Task<IActionResult> Index()
         {
-              return _context.Voiture != null ? 
-                          View(await _context.Voiture.ToListAsync()) :
+              return _context.Voitures != null ? 
+                          View(await _context.Voitures.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Voiture'  is null.");
         }
 
         // GET: Voitures/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Voiture == null)
+            if (id == null || _context.Voitures == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voiture
+            var voiture = await _context.Voitures
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (voiture == null)
             {
@@ -69,12 +69,12 @@ namespace VoitureExpress.Controllers
         // GET: Voiture/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Voiture == null)
+            if (id == null || _context.Voitures == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voiture.FindAsync(id);
+            var voiture = await _context.Voitures.FindAsync(id);
             if (voiture == null)
             {
                 return NotFound();
@@ -120,12 +120,12 @@ namespace VoitureExpress.Controllers
         // GET: Voiture/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Voiture == null)
+            if (id == null || _context.Voitures == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voiture
+            var voiture = await _context.Voitures
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (voiture == null)
             {
@@ -140,14 +140,14 @@ namespace VoitureExpress.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Voiture == null)
+            if (_context.Voitures == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Voiture'  is null.");
             }
-            var voiture = await _context.Voiture.FindAsync(id);
+            var voiture = await _context.Voitures.FindAsync(id);
             if (voiture != null)
             {
-                _context.Voiture.Remove(voiture);
+                _context.Voitures.Remove(voiture);
             }
             
             await _context.SaveChangesAsync();
@@ -156,14 +156,14 @@ namespace VoitureExpress.Controllers
 
         private bool VoitureExists(int id)
         {
-          return (_context.Voiture?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Voitures?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         // GET: Voitures/Search
         public async Task<IActionResult> Search(string searchString)
         {
             // Recherche les voitures dont la marque, le modèle ou la finition contiennent la chaîne de recherche.
-            var voitures = from v in _context.Voiture
+            var voitures = from v in _context.Voitures
                            select v;
 
             if (!String.IsNullOrEmpty(searchString))

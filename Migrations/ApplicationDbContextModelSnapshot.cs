@@ -8,7 +8,7 @@ using VoitureExpress.Data;
 
 #nullable disable
 
-namespace VoitureExpress.Data.Migrations
+namespace VoitureExpress.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -224,11 +224,44 @@ namespace VoitureExpress.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Voiture", b =>
+            modelBuilder.Entity("VoitureExpress.Models.Intervention", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Cout")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DateIntervention")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VoitureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Interventions");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Intervention");
+                });
+
+            modelBuilder.Entity("VoitureExpress.Models.Voiture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("VoitureId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -271,7 +304,16 @@ namespace VoitureExpress.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Voiture");
+                    b.ToTable("Voitures");
+                });
+
+            modelBuilder.Entity("VoitureExpress.Models.Interventions", b =>
+                {
+                    b.HasBaseType("VoitureExpress.Models.Intervention");
+
+                    b.HasIndex("VoitureId");
+
+                    b.HasDiscriminator().HasValue("Interventions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -323,6 +365,22 @@ namespace VoitureExpress.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("VoitureExpress.Models.Interventions", b =>
+                {
+                    b.HasOne("VoitureExpress.Models.Voiture", "Voiture")
+                        .WithMany("Interventions")
+                        .HasForeignKey("VoitureId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Voiture");
+                });
+
+            modelBuilder.Entity("VoitureExpress.Models.Voiture", b =>
+                {
+                    b.Navigation("Interventions");
                 });
 #pragma warning restore 612, 618
         }
