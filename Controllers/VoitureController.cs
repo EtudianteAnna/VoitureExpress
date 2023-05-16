@@ -46,7 +46,7 @@ namespace VoitureExpress.Controllers
         }
 
         // GET: Voitures/Create
-
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -140,6 +140,7 @@ namespace VoitureExpress.Controllers
         }
 
         // POST: Voitures/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
