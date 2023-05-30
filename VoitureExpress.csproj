@@ -1,3 +1,6 @@
+﻿
+
+
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
@@ -8,6 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Program.cs" />
+  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="Voiture.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.7.104.5" />
     <PackageReference Include="bootstrap" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.15" />
@@ -17,6 +31,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+  </ItemGroup>
+	 <ItemGroup>
+		 <Reference Include="VoitureExpress">
+			 <HintPath>C:\Users\A154NF\source\repos\VoitureExpress\VoitureExpress\bin\Debug\net6.0\VoitureExpress.dll</HintPath>
+		 </Reference>
   </ItemGroup>
 
 </Project>

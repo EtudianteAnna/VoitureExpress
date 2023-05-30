@@ -1,0 +1,37 @@
+﻿@model VoitureExpress.Models.ReparationVoiture
+
+@{
+    ViewData["Title"] = "Créer une Réparation";
+}
+
+<h1>Créer une Réparation</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label>Date de Réparation</label>
+        <input asp-for="DateReparation" class="form-control" />
+        <span asp-validation-for="DateReparation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Coût de Réparation</label>
+        <input asp-for="CoutReparation" class="form-control" />
+        <span asp-validation-for="CoutReparation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Type de Réparation</label>
+        <input asp-for="Reparation" class="form-control" />
+        <span asp-validation-for="Reparation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Identifiant de la Voiture</label>
+        <input asp-for="VoitureId" class="form-control" />
+        <span asp-validation-for="VoitureId" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Créer" class="btn btn-primary" />
+
+</form>
+
+<div>
+    <a asp-action="Index">Retour à la liste</a>
+</div>
+

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Authorization
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,6 +14,10 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
+                <div class="container" id="reparations" asp-controller="Reparation" asp-action="Index" **[Authorize]**>
+                    <!-- Contenu de la page -->
+                </div>
+
                 <a class="navbar-brand" asp-area="" asp-controller="Voiture" asp-action="Index">VoitureExpress</a>
                 <a>
                     <img src="https://axa365-my.sharepoint.com/:i:/r/personal/a154nf_login_axa/Documents/Images/R.jpg?csf=1&web=1&e=49hDh5" />

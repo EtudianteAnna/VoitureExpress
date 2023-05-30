@@ -1,4 +1,4 @@
-﻿@model Voiture
+﻿@model VoitureExpress.Controllers
 
 @{
     ViewData["Title"] = "Details";
@@ -41,28 +41,26 @@
             @Html.DisplayFor(model => model.DateAchat)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Prix)
+            @Html.DisplayNameFor(model => model.PrixDeVente)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Prix)
+            @Html.DisplayFor(model => model.PrixDeVente)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Réparations)
-        </dt>
+            @Html.DisplayNameFor(model => model.CoutReparation )
+                </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Réparations)
-        </dd>
+            @Html.DisplayFor(model => model.CoutReparation )
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CoûtsDeRéparations)
+            @Html.DisplayNameFor(model => model.CoutReparation )
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CoûtsDeRéparations)
-        </dd>
+            @Html.DisplayFor(model => model.CoutReparation )
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Disponibilité)
+            @Html.DisplayNameFor(model => model.Disponibilite)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Disponibilité)
+            @Html.DisplayFor(model => model.Disponibilite)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PrixDeVente)

@@ -1,84 +1,49 @@
-﻿@model Voiture
+﻿@model VoitureExpress.Controllers
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Voiture et Réparations";
 }
 
-<h1>Edit</h1>
+<h1>Voiture et Réparations</h1>
 
-<h4>Voiture</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Marque" class="control-label"></label>
-                <input asp-for="Marque" class="form-control" />
-                <span asp-validation-for="Marque" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Modele" class="control-label"></label>
-                <input asp-for="Modele" class="form-control" />
-                <span asp-validation-for="Modele" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Annee" class="control-label"></label>
-                <input asp-for="Annee" class="form-control" />
-                <span asp-validation-for="Annee" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Finition" class="control-label"></label>
-                <input asp-for="Finition" class="form-control" />
-                <span asp-validation-for="Finition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateAchat" class="control-label"></label>
-                <input asp-for="DateAchat" class="form-control" />
-                <span asp-validation-for="DateAchat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Prix" class="control-label"></label>
-                <input asp-for="Prix" class="form-control" />
-                <span asp-validation-for="Prix" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Réparations" class="control-label"></label>
-                <input asp-for="Réparations" class="form-control" />
-                <span asp-validation-for="Réparations" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CoûtsDeRéparations" class="control-label"></label>
-                <input asp-for="CoûtsDeRéparations" class="form-control" />
-                <span asp-validation-for="CoûtsDeRéparations" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Disponibilité" /> @Html.DisplayNameFor(model => model.Disponibilité)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrixDeVente" class="control-label"></label>
-                <input asp-for="PrixDeVente" class="form-control" />
-                <span asp-validation-for="PrixDeVente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateDeVente" class="control-label"></label>
-                <input asp-for="DateDeVente" class="form-control" />
-                <span asp-validation-for="DateDeVente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div>
+    <h4>Informations sur la voiture :</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Marque :</dt>
+        <dd class="col-sm-10">@Model.Voiture.Marque</dd>
+
+        <dt class="col-sm-2">Modèle :</dt>
+        <dd class="col-sm-10">@Model.Voiture.Modele</dd>
+
+        <dt class="col-sm-2">Année :</dt>
+        <dd class="col-sm-10">@Model.Voiture.Annee</dd>
+
+        <dt class="col-sm-2">Finition :</dt>
+        <dd class="col-sm-10">@Model.Voiture.Finition</dd>
+
+        <!-- Ajoutez ici les autres propriétés de la voiture à afficher -->
+    </dl>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <h4>Réparations :</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date de réparation</th>
+                <th>Type d'intervention</th>
+                <th>Coût de réparation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reparation in Model.ReparationVoiture.VoitureReparation)
+            {
+                <tr>
+                    <td>@reparation.DateReparation</td>
+                    <td>@reparation.TypeIntervention</td>
+                    <td>@reparation.CoutReparation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
