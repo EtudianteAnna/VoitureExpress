@@ -14,22 +14,14 @@ namespace VoitureExpress.Models
         public int Annee { get; set; }
         public DateTime DateAchat { get; set; }
         public string? Finition { get; set; }
-        public Decimal PrixDeVente  { get; set; }
+        public Decimal PrixDeVente { get; set; }
         public string? Disponibilite { get; set; }
         public DateTime DateDeVente { get; set; }
         // Autres propriétés de la classe Voiture
 
         // Propriété de navigation vers les réparations
-       public virtual ICollection<ReparationVoiture>? Reparations { get; set; }
+        public virtual ICollection<ReparationVoiture>? Reparations { get; set; }
     }
-         
-    
+
+
 }
-
-
-
-
-
-
-
-

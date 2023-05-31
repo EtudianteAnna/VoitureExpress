@@ -71,23 +71,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PrixDeVente)
                 </td>
-                <td>
-                    @foreach (var reparation in item.Reparations)
-                    {
-                        <div>
-                            @reparation.TypeIntervention
-                        </div>
-                    }
-                </td>
-                <td>
-                    @foreach (var reparation in item.Reparations)
-                    {
-                        <div>
-                            @reparation.CoutReparation
-                        </div>
-                    }
-                </td>
-                <td>
+                
+                 <td>
                     @Html.DisplayFor(modelItem => item.Disponibilite)
                 </td>
                 <td>

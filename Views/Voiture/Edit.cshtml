@@ -1,4 +1,4 @@
-﻿@model VoitureExpress.Controllers
+﻿@model Voiture
 
 @{
     ViewData["Title"] = "Voiture et Réparations";
@@ -10,16 +10,16 @@
     <h4>Informations sur la voiture :</h4>
     <dl class="row">
         <dt class="col-sm-2">Marque :</dt>
-        <dd class="col-sm-10">@Model.Voiture.Marque</dd>
+        <dd class="col-sm-10">@Model.Marque</dd>
 
         <dt class="col-sm-2">Modèle :</dt>
-        <dd class="col-sm-10">@Model.Voiture.Modele</dd>
+        <dd class="col-sm-10">@Model.Modele</dd>
 
         <dt class="col-sm-2">Année :</dt>
-        <dd class="col-sm-10">@Model.Voiture.Annee</dd>
+        <dd class="col-sm-10">@Model.Annee</dd>
 
         <dt class="col-sm-2">Finition :</dt>
-        <dd class="col-sm-10">@Model.Voiture.Finition</dd>
+        <dd class="col-sm-10">@Model.Finition</dd>
 
         <!-- Ajoutez ici les autres propriétés de la voiture à afficher -->
     </dl>
@@ -36,7 +36,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var reparation in Model.ReparationVoiture.VoitureReparation)
+            @foreach (var reparation in Model.Reparations)
             {
                 <tr>
                     <td>@reparation.DateReparation</td>
