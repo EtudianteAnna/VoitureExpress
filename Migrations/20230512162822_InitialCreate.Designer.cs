@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using VoitureExpress.Data;
+
 
 #nullable disable
 
 namespace VoitureExpress.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(VoitureExpressContext))]
     [Migration("20230512162822_InitialCreate")]
     partial class InitialCreate
     {

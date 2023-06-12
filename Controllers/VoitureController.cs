@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using VoitureExpress.Data;
+
 using VoitureExpress.Models;
 
 
@@ -12,30 +12,34 @@ namespace VoitureExpress.Controllers
 {
     public class VoitureController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly VoitureExpressContext _context;
 
-        public VoitureController(ApplicationDbContext context)
+        public VoitureController(VoitureExpressContext context)
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Administrator")]
+        public string Test()
+        {
+            return "hello test";
+        }
         // GET: Voitures
         public async Task<IActionResult> Index()
         {
-              return _context.Voitures != null ? 
-                          View(await _context.Voitures.ToListAsync()) :
+              return _context.Voiture != null ? 
+                          View(await _context.Voiture.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Voiture'  is null.");
         }
 
         // GET: Voitures/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Voitures == null)
+            if (id == null || _context.Voiture == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voitures
+            var voiture = await _context.Voiture
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (voiture == null)
             {
@@ -72,12 +76,12 @@ namespace VoitureExpress.Controllers
         // GET: Voiture/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Voitures == null)
+            if (id == null || _context.Voiture == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voitures.FindAsync(id);
+            var voiture = await _context.Voiture.FindAsync(id);
             if (voiture == null)
             {
                 return NotFound();
@@ -124,12 +128,12 @@ namespace VoitureExpress.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Voitures == null)
+            if (id == null || _context.Voiture == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voitures
+            var voiture = await _context.Voiture
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (voiture == null)
             {
@@ -145,14 +149,14 @@ namespace VoitureExpress.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Voitures == null)
+            if (_context.Voiture == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Voiture'  is null.");
             }
-            var voiture = await _context.Voitures.FindAsync(id);
+            var voiture = await _context.Voiture.FindAsync(id);
             if (voiture != null)
             {
-                _context.Voitures.Remove(voiture);
+                _context.Voiture.Remove(voiture);
             }
             
             await _context.SaveChangesAsync();
@@ -161,14 +165,14 @@ namespace VoitureExpress.Controllers
 
         private bool VoitureExists(int id)
         {
-          return (_context.Voitures?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Voiture?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         // GET: Voitures/Search
         public async Task<IActionResult> Search(string searchString)
         {
             // Recherche les voitures dont la marque, le modèle ou la finition contiennent la chaîne de recherche.
-            var voitures = from v in _context.Voitures
+            var voitures = from v in _context.Voiture
                            select v;
 
             if (!String.IsNullOrEmpty(searchString))

@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-using VoitureExpress.Data;
+
+
+
 using VoitureExpress.Models;
 
 namespace VoitureExpress.Controllers
 {
     public class ReparationController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly VoitureExpressContext _context;
 
-        public ReparationController(ApplicationDbContext context)
+        public ReparationController(VoitureExpressContext context)
         {
             _context = context;
         }
@@ -19,7 +19,12 @@ namespace VoitureExpress.Controllers
         // GET: Reparation
         public async Task<IActionResult> Index()
         {
-            var reparations = await _context.Reparation.Include(r => r.Voiture).ToListAsync();
+#pragma warning disable CS8604 // Existence possible d'un argument de référence null.
+            var reparations = await _context.ReparationVoiture                .Include(r => r.Voiture)
+                .ToListAsync();
+
+#pragma warning restore CS8604 // Existence possible d'un argument de référence null.
+
             return View(reparations);
         }
 
@@ -31,7 +36,7 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var reparation = await _context.Reparation.Include(r => r.Voiture).FirstOrDefaultAsync(r => r.Id == id);
+            var reparation = await _context.ReparationVoiture.Include(r => r.Voiture).FirstOrDefaultAsync(r => r.Id == id);
 
             if (reparation == null)
             {
@@ -44,7 +49,7 @@ namespace VoitureExpress.Controllers
         // GET: Reparation/Create creation liste de types de réparation
         public IActionResult Create()
         {
-            ViewBag.Voitures = _context.Voitures.ToList();
+            ViewBag.Voitures = _context.Voiture.ToList();
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" }; // Ajout du type de réparation "freins"
             return View();
         }
@@ -52,18 +57,18 @@ namespace VoitureExpress.Controllers
         // POST: Reparation/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateReparation,CoutReparation,VoitureId,TypeReparation")] ReparationVoiture reparation)
+        public async Task<IActionResult> Create([Bind("Id,DateReparation,CoutReparation,VoitureId,TypeReparation")] ReparationVoiture reparations)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reparation);
+                _context.Add(reparations);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Voitures = _context.Voitures.ToList();
+            ViewBag.Voitures = _context.Voiture.ToList();
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" }; // Ajout du type de réparation "frein
-            return View(reparation);
+            return View(reparations);
         }
 
         // GET: Reparation/Edit/5
@@ -74,22 +79,22 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var reparation = await _context.Reparation.FindAsync(id);
+            var reparation = await _context.ReparationVoiture.FindAsync(id);
             if (reparation == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Voitures = _context.Voitures.ToList();
+            ViewBag.Voitures = _context.Voiture.ToList();
             return View(reparation);
         }
 
         // POST: Reparation/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] ReparationVoiture reparation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] ReparationVoiture reparations)
         {
-            if (id != reparation.Id)
+            if (id != reparations.Id)
             {
                 return NotFound();
             }
@@ -98,12 +103,12 @@ namespace VoitureExpress.Controllers
             {
                 try
                 {
-                    _context.Update(reparation);
+                    _context.Update(reparations);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReparationExists(reparation.Id))
+                    if (!ReparationExists(reparations.Id))
                     {
                         return NotFound();
                     }
@@ -115,8 +120,8 @@ namespace VoitureExpress.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Voitures = _context.Voitures.ToList();
-            return View(reparation);
+            ViewBag.Voitures = _context.Voiture.ToList();
+            return View(reparations);
         }
 
         // GET: Reparation/Delete/5
@@ -128,7 +133,7 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var reparation = await _context.Reparation.Include(r => r.Voiture).FirstOrDefaultAsync(r => r.Id == id);
+            var reparation = await _context.ReparationVoiture.Include(r => r.Voiture).FirstOrDefaultAsync(r => r.Id == id);
             if (reparation == null)
             {
                 return NotFound();
@@ -142,20 +147,20 @@ namespace VoitureExpress.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reparation = await _context.Reparation.FindAsync(id);
+            var reparation = await _context.ReparationVoiture.FindAsync(id);
             if (reparation == null)
             {
                 return NotFound();
             }
 
-            _context.Reparation.Remove(reparation);
+            _context.ReparationVoiture.Remove(reparation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReparationExists(int id)
         {
-            return _context.Reparation.Any(r => r.Id == id);
+            return _context.ReparationVoiture .Any(r => r.Id == id);
         }
     }
 }
