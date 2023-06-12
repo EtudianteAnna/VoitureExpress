@@ -36,12 +36,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var reparation in Model.Reparations)
+            @foreach (var reparation in Model.ReparationVoiture)
             {
                 <tr>
                     <td>@reparation.DateReparation</td>
                     <td>@reparation.TypeIntervention</td>
-                    <td>@reparation.CoutReparation</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>@reparation.CoutReparation</td>
+                    }
                 </tr>
             }
         </tbody>

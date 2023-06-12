@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 
 
 namespace VoitureExpress.Models
@@ -6,6 +9,7 @@ namespace VoitureExpress.Models
     public class ReparationVoiture
     {
         [Key]
+        [Column("ReparationId")]
         public int Id { get; set; }
 
         public DateTime DateReparation { get; set; }

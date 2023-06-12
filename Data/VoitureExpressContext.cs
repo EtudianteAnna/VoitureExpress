@@ -1,10 +1,8 @@
-﻿
-
-
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VoitureExpress.Models;
 
-public class VoitureExpressContext : DbContext
+public class VoitureExpressContext : IdentityDbContext
 
 {
     public VoitureExpressContext(DbContextOptions<VoitureExpressContext> options) : base(options) { }

@@ -8,8 +8,8 @@ namespace VoitureExpress.Areas.Identity
 
         [Key]
         public int Id { get; set; }
-        public string NomUtilisateur { get; set; }
-        public string MotDePasse { get; set; }
+        public string? NomUtilisateur { get; set; }
+        public string? MotDePasse { get; set; }
         public bool EstAdministrateur { get; set; }
     }
 }

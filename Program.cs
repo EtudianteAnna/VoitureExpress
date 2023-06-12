@@ -64,7 +64,15 @@ namespace VoitureExpress
             }
 
             // Configure the rest of your application
-
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Voiture}/{action=Index}/{id?}");
+            app.MapRazorPages();
             app.Run();
         }
     }

@@ -1,7 +1,5 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+
 // ...
 
 public class Startup
@@ -17,13 +15,22 @@ public class Startup
     {
         services.AddControllersWithViews();
 
-        services.AddDbContext<VoitureExpressContext>(options =>
+        // Définition de AccueilController comme page d'accueil
+
+
+
+        _ = services.AddDbContext<VoitureExpressContext>(options =>
             options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        // ...
+        app.UseEndpoints(endpoints =>
+        {
+            _ = endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Accueil}/{action=Index}/{id?}");
+        });
     }
 }
 

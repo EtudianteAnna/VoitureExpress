@@ -47,12 +47,16 @@
             @Html.DisplayFor(model => model.PrixDeVente)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reparations.FirstOrDefault().CoutReparation )
+            @Html.DisplayNameFor(model => model.ReparationVoiture.FirstOrDefault().CoutReparation )
                 </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reparations.Sum(r=>r.CoutReparation))
+
+            @if (Model.ReparationVoiture != null)
+            {
+                @Html.DisplayFor(model => model.ReparationVoiture.Sum(r=>r.CoutReparation))
+            }
         <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Reparations.FirstOrDefault().CoutReparation )
+                @Html.DisplayNameFor(model => model.ReparationVoiture.FirstOrDefault().CoutReparation )
         </dt>
         
 
