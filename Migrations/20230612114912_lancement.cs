@@ -4,7 +4,7 @@
 
 namespace VoitureExpress.Migrations
 {
-    public partial class lancement : Migration
+    public partial class Lancement : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

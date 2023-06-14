@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace VoitureExpress.Migrations
 {
-    public partial class voiture : Migration
+    public partial class Voiture : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +15,7 @@ namespace VoitureExpress.Migrations
                 name: "CoûtsDeRéparations",
                 table: "Voitures");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "Disponibilité",
                 table: "Voitures");
 
@@ -28,7 +27,7 @@ namespace VoitureExpress.Migrations
                 name: "Réparations",
                 table: "Voitures");
 
-            migrationBuilder.AlterColumn<string>(
+            _ = migrationBuilder.AlterColumn<string>(
                 name: "Modele",
                 table: "Voitures",
                 type: "nvarchar(max)",

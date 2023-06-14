@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+
 
 
 namespace VoitureExpress.Models
@@ -20,7 +18,7 @@ namespace VoitureExpress.Models
         [DataType(DataType.Date)]
         public DateTime DateAchat { get; set; }
         public string? Finition { get; set; }
-        public Decimal PrixDeVente { get; set; }
+        public decimal PrixDeVente { get; set; }
         public string? Disponibilite { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateDeVente { get; set; }

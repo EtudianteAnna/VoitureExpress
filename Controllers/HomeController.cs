@@ -2,9 +2,10 @@
 
 namespace VoitureExpress.Controllers
 {
+
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Accueil()
         {
             return View();
         }

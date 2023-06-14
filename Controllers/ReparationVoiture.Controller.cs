@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoitureExpress.Models;
 
+
 namespace VoitureExpress.Controllers
 {
     public class ReparationController : Controller
@@ -17,11 +18,9 @@ namespace VoitureExpress.Controllers
         // GET: Reparation
         public async Task<IActionResult> Index()
         {
-            var reparations = await _context.ReparationVoiture
-                .Include(r => r.Voiture)
-                .ToListAsync();
-
-            return View(reparations);
+            var voitures = await _context.Voiture.Include(v => v.ReparationVoiture).ToListAsync();
+               
+              return View(voitures);
         }
 
         // GET: Reparation/Details/5
@@ -35,13 +34,14 @@ namespace VoitureExpress.Controllers
 
             ReparationVoiture reparation = await _context.ReparationVoiture
                 .Include(r => r.Voiture)
-                .FirstOrDefaultAsync(r => r.Id == id);
+    .FirstOrDefaultAsync(r => r.Id == id);
+
 
             if (reparation == null)
             {
                 return NotFound();
             }
-
+                   
             return View(reparation);
         }
 
@@ -49,7 +49,11 @@ namespace VoitureExpress.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            ViewBag.Voitures = _context.Voiture.ToList();
+            var voitures = _context.Voiture.ToList();
+            if (voitures == null)
+            {
+                return NotFound();
+            }
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
             return View();
         }
@@ -86,8 +90,13 @@ namespace VoitureExpress.Controllers
             {
                 return NotFound();
             }
+            var voitures = await _context.Voiture.ToListAsync();
+            if (voitures == null)
+            {
+                return NotFound();
+            }
 
-            ViewBag.Voitures = _context.Voiture.ToList();
+            ViewBag.Voitures = voitures;
             return View(reparation);
         }
 
@@ -97,7 +106,7 @@ namespace VoitureExpress.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] ReparationVoiture reparation)
         {
-            if (id != reparation.Id)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -153,9 +162,9 @@ namespace VoitureExpress.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int reparationId)
         {
-            var reparation = await _context.ReparationVoiture.FindAsync(id);
+            var reparation = await _context.ReparationVoiture.FindAsync(reparationId);
             if (reparation == null)
             {
                 return NotFound();
@@ -168,7 +177,7 @@ namespace VoitureExpress.Controllers
 
         private bool ReparationExists(int id)
         {
-            return _context.ReparationVoiture.Any(r => r.Id == id);
+            return _context.ReparationVoiture != null && _context.ReparationVoiture.Any(r => r.Id == id);
         }
     }
 }

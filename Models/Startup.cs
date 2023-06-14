@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 // ...
 
 public class Startup
@@ -14,10 +13,26 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllersWithViews();
-
+        
         // Définition de AccueilController comme page d'accueil
+        _ = services.AddAuthentication(options =>
+        {
 
+        })
+            .AddCookie(options =>
+        {
 
+        });
+
+        // Ajouter les services d'autorisation
+        services.AddAuthorization(options =>
+        {
+            // Définir les politiques d'autorisation
+            options.AddPolicy("AdministratorOnly", policy =>
+            {
+                policy.RequireRole("Administrator");
+            });
+        });
 
         _ = services.AddDbContext<VoitureExpressContext>(options =>
             options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
@@ -25,11 +40,20 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseRouting();
+
+        // Activer le middleware d'authentification
+        app.UseAuthentication();
+
+        // Activer le middleware d'autorisation
+        app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
-            _ = endpoints.MapControllerRoute(
+            endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Accueil}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Accueil}/{id?}")
+                .RequireAuthorization("AdministratorOnly"); // Appliquer la politique d'autorisation aux endpoints
         });
     }
 }
