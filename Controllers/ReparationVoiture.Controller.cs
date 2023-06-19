@@ -104,7 +104,7 @@ namespace VoitureExpress.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] ReparationVoiture reparation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] ReparationVoiture reparations)
         {
             if (id == null)
             {
@@ -115,12 +115,12 @@ namespace VoitureExpress.Controllers
             {
                 try
                 {
-                    _context.Update(reparation);
-                    await _context.SaveChangesAsync();
+                    _ = _context.Update(reparations);
+                    _ = await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReparationExists(reparation.Id))
+                    if (!ReparationExists(reparations.Id))
                     {
                         return NotFound();
                     }
@@ -133,7 +133,7 @@ namespace VoitureExpress.Controllers
             }
 
             ViewBag.Voitures = _context.Voiture.ToList();
-            return View(reparation);
+            return View(reparations);
         }
 
         // GET: Reparation/Delete/5

@@ -21,7 +21,7 @@
         <dt class="col-sm-2">Finition :</dt>
         <dd class="col-sm-10">@Model.Finition</dd>
 
-        <!-- Ajoutez ici les autres propriétés de la voiture à afficher -->
+        <!-- Afficher ici les autres propriétés de la voiture à afficher -->
     </dl>
 </div>
 
@@ -36,17 +36,29 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var reparation in Model.ReparationVoiture)
+            @if (Model.ReparationVoiture != null && Model.ReparationVoiture.Count> 0)
+            {
+             foreach (var reparation in Model.ReparationVoiture)
+              {
+                    <tr>
+                        <td>@reparation.DateReparation</td>
+                        <td>@reparation.TypeIntervention</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>@reparation.CoutReparation</td>
+                        }
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@reparation.DateReparation</td>
-                    <td>@reparation.TypeIntervention</td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <td>@reparation.CoutReparation</td>
-                    }
+                    <td colspan="3">Aucune réparation disponible.</td>
                 </tr>
+
             }
         </tbody>
     </table>
-</div>
+<        </div>
+         
+                

@@ -13,16 +13,16 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllersWithViews();
-        
+
         // Définition de AccueilController comme page d'accueil
         _ = services.AddAuthentication(options =>
         {
 
         })
             .AddCookie(options =>
-        {
+            {
 
-        });
+            });
 
         // Ajouter les services d'autorisation
         services.AddAuthorization(options =>
@@ -57,7 +57,6 @@ public class Startup
         });
     }
 }
-
 
 
 

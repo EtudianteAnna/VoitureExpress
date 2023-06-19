@@ -5,7 +5,7 @@ using VoitureExpress.Models;
 
 namespace VoitureExpress.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    
     public class VoitureController : Controller
     {
         private readonly VoitureExpressContext _context;
@@ -15,16 +15,10 @@ namespace VoitureExpress.Controllers
             _context = context;
         }
 
-        [Route("/")]
-        public IActionResult Accueil()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> Index()
+               public async Task<IActionResult> Index()
         {
             var voitures = await _context.Voiture.ToListAsync();
-            return View("Index0", voitures);
+            return View("Index", voitures);
         }
 
         public async Task<IActionResult> Index0()
