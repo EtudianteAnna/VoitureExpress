@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoitureExpress.Models;
 
-
 namespace VoitureExpress.Controllers
 {
     public class ReparationController : Controller
@@ -16,12 +15,15 @@ namespace VoitureExpress.Controllers
         }
 
         // GET: Reparation
-        public async Task<IActionResult> Index()
+        public IActionResult IndexReparationVoiture()
         {
-            var voitures = await _context.Voiture.Include(v => v.ReparationVoiture).ToListAsync();
-               
-              return View(voitures);
+            var reparations = _context.ReparationVoiture
+                .Include(r=> r.Voiture)
+                .ToList();
+            return View(reparations);
+        
         }
+
 
         // GET: Reparation/Details/5
         [Authorize(Roles = "Admin")]
@@ -32,7 +34,7 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            ReparationVoiture reparation = await _context.ReparationVoiture
+            Reparation reparation = await _context.ReparationVoiture
                 .Include(r => r.Voiture)
     .FirstOrDefaultAsync(r => r.Id == id);
 
@@ -62,18 +64,18 @@ namespace VoitureExpress.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,DateReparation,CoutReparation,VoitureId,TypeReparation")] ReparationVoiture reparation)
+        public async Task<IActionResult> Create([Bind("Id,DateReparation,CoutReparation,VoitureId,TypeReparation")] Reparation editedReparation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reparation);
+                _context.Add(editedReparation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
             ViewBag.Voitures = _context.Voiture.ToList();
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
-            return View(reparation);
+            return View(editedReparation);
         }
 
         // GET: Reparation/Edit/5
@@ -104,9 +106,9 @@ namespace VoitureExpress.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] ReparationVoiture reparations)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReparation,CoutReparation,VoitureId")] Reparation editedReparation)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -115,12 +117,12 @@ namespace VoitureExpress.Controllers
             {
                 try
                 {
-                    _ = _context.Update(reparations);
+                    _ = _context.Update(editedReparation);
                     _ = await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReparationExists(reparations.Id))
+                    if (!ReparationExists(editedReparation.Id))
                     {
                         return NotFound();
                     }
@@ -133,7 +135,7 @@ namespace VoitureExpress.Controllers
             }
 
             ViewBag.Voitures = _context.Voiture.ToList();
-            return View(reparations);
+            return View(editedReparation);
         }
 
         // GET: Reparation/Delete/5

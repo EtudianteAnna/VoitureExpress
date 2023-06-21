@@ -1,37 +1,29 @@
-﻿@model VoitureExpress.Models.ReparationVoiture
+﻿@model VoitureExpress.Models.Reparation
 
-@{
-    ViewData["Title"] = "Créer une Réparation";
-}
+<h2>Create Reparation</h2>
 
-<h1>Créer une Réparation</h1>
-
-<form asp-action="Create">
+<form asp-action="CreateReparation">
     <div class="form-group">
-        <label>Date de Réparation</label>
+        <label asp-for="DateReparation" class="control-label"></label>
         <input asp-for="DateReparation" class="form-control" />
         <span asp-validation-for="DateReparation" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label>Coût de Réparation</label>
+        <label asp-for="TypeIntervention" class="control-label"></label>
+        <input asp-for="TypeIntervention" class="form-control" />
+        <span asp-validation-for="TypeIntervention" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CoutReparation" class="control-label"></label>
         <input asp-for="CoutReparation" class="form-control" />
         <span asp-validation-for="CoutReparation" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label>Type de Réparation</label>
-        <input asp-for="Reparation" class="form-control" />
-        <span asp-validation-for="Reparation" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Identifiant de la Voiture</label>
-        <input asp-for="VoitureId" class="form-control" />
-        <span asp-validation-for="VoitureId" class="text-danger"></span>
-    </div>
-    <input type="submit" value="Créer" class="btn btn-primary" />
 
+    <input type="hidden" asp-for="VoitureId" />
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
 </form>
 
-<div>
-    <a asp-action="Index">Retour à la liste</a>
-</div>
-
+    

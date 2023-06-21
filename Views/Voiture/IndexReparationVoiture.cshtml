@@ -1,0 +1,42 @@
+﻿@model IEnumerable<VoitureExpress.Models.Reparation>
+@{
+    ViewData["Title"] = "IndexReparation";
+}
+
+<h1>IndexReparation</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date de Réparation</th>
+            <th>Type d'Intervention</th>
+            <th>Coût de Réparation</th>
+            <th>Voiture</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reparation in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => reparation.DateReparation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => reparation.TypeIntervention)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => reparation.CoutReparation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => reparation.Voiture.Finition)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@reparation.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@reparation.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@reparation.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

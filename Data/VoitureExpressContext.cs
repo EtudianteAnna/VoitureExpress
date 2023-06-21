@@ -11,7 +11,7 @@ public class VoitureExpressContext : IdentityDbContext<IdentityUser>
 
 
     public DbSet<Voiture> ? Voiture { get; set; }
-    public DbSet<ReparationVoiture> ? ReparationVoiture{ get; set; }
+    public DbSet<Reparation> ? ReparationVoiture{ get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

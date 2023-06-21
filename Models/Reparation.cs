@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
-
 
 namespace VoitureExpress.Models
 {
-    public class ReparationVoiture
+    public class Reparation
     {
         [Key]
         [Column("ReparationId")]
@@ -14,7 +12,7 @@ namespace VoitureExpress.Models
         public DateTime DateReparation { get; set; }
 
         public decimal CoutReparation { get; set; }
-        public string? Reparation { get; set; }
+        public string? Reparations{ get; set; }
         public string? TypeIntervention { get; set; }
 
         [Required]

@@ -22,12 +22,13 @@ namespace VoitureExpress.Models
         public string? Disponibilite { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateDeVente { get; set; }
+        public string? Reparations{ get; set; }
 
         // Propriété de navigation vers les réparations
-        public virtual ICollection<ReparationVoiture> ReparationVoiture { get; set; }
+        public virtual ICollection<Reparation>? ReparationVoiture { get; set; }
         public void LoadReparation(IdentityDbContext context)
         {
-            ReparationVoiture = context.Set<ReparationVoiture>()
+            ReparationVoiture = context.Set<Reparation>()
                 .Where(r => r.VoitureId == Id)
                .ToList();
         }

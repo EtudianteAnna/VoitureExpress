@@ -5,7 +5,7 @@ using VoitureExpress.Models;
 
 namespace VoitureExpress.Controllers
 {
-    
+
     public class VoitureController : Controller
     {
         private readonly VoitureExpressContext _context;
@@ -15,7 +15,7 @@ namespace VoitureExpress.Controllers
             _context = context;
         }
 
-               public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var voitures = await _context.Voiture.ToListAsync();
             return View("Index", voitures);
@@ -40,7 +40,6 @@ namespace VoitureExpress.Controllers
             {
                 return NotFound();
 
-
             }
 
             return View(voiture);
@@ -55,10 +54,13 @@ namespace VoitureExpress.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Marque,Modele,Annee,Finition,DateAchat,Prix,Réparations,CoûtsDeRéparations,Disponibilité,PrixDeVente,DateDeVente")] Voiture voiture)
+        public async Task<IActionResult> Create([Bind("Id,Marque,Modele,Annee,Finition,DateAchat,Prix,Réparations,CoûtsDeRéparations,Disponibilité,PrixDeVente,DateDeVente")] Models.Voiture voiture)
         {
             if (ModelState.IsValid)
             {
+                // Exemple d'ajout d'une nouvelle réparation à la liste existante
+                voiture.ReparationVoiture.Add(new Reparation { DateReparation = DateTime.Now, TypeIntervention = "Nouvelle intervention", CoutReparation = 100 });
+
                 _context.Add(voiture);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -72,19 +74,29 @@ namespace VoitureExpress.Controllers
             {
                 return NotFound();
             }
-
             var voiture = await _context.Voiture.FindAsync(id);
             if (voiture == null)
             {
                 return NotFound();
             }
 
-            return View(voiture);
+            // Effectuer les modifications souhaitées sur la voiture
+            voiture.Marque = "Nouvelle marque";
+            voiture.Modele = "Nouveau modèle";
+            voiture.Annee = 2023;
+            voiture.Finition = "Nouvelle finition";
+           
+            // ...
+
+            // Enregistrer les changements
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marque,Modele,Annee,Finition,DateAchat,Prix,Réparations,CoûtsDeRéparations,Disponibilité,PrixDeVente,DateDeVente")] Voiture voiture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marque,Modele,Annee,Finition,DateAchat,Prix,Réparations,CoûtsDeRéparations,Disponibilité,PrixDeVente,DateDeVente")] Models.Voiture voiture)
         {
             if (id != voiture.Id)
             {
