@@ -59,7 +59,7 @@ namespace VoitureExpress.Controllers
             if (ModelState.IsValid)
             {
                 // Exemple d'ajout d'une nouvelle réparation à la liste existante
-                voiture.ReparationVoiture.Add(new Reparation { DateReparation = DateTime.Now, TypeIntervention = "Nouvelle intervention", CoutReparation = 100 });
+                voiture.ReparationVoiture.Add(new Reparation { DateReparation = DateTime.Now, TypeReparation = "Nouvelle intervention", CoutReparation = 100 });
 
                 _context.Add(voiture);
                 await _context.SaveChangesAsync();
