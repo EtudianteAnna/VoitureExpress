@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using VoitureExpress.Migrations;
 using VoitureExpress.Models;
 
 namespace VoitureExpress.Controllers
@@ -65,8 +67,9 @@ namespace VoitureExpress.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Voitures = new SelectList(voitures, "Id", "Marque"); // Sélection de la voiture par son identifiant et affichage du nom dans la liste déroulante
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
-            return View();
+            return View("CreateReparationVoiture");
         }
 
         // POST: Reparation/Create
@@ -82,9 +85,9 @@ namespace VoitureExpress.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Voitures = _context.Voiture.ToList();
+            ViewBag.Voitures = new SelectList(_context.Voiture,"Id", "Marque"); // Sélection de la voiture par son identifiant et affichage du nom dans la liste déroulante
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
-            return View(editedReparation);
+            return View("CreateReparationVoiture");
         }
 
         // GET: Reparation/Edit/5
