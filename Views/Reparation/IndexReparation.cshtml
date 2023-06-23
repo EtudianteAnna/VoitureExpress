@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Reparation>
+
+@{
+    ViewData["Title"] = "Liste des Réparations";
+}
+
+<h1>Liste des Réparations</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date de Réparation</th>
+                <th>Type de Réparation</th>
+                <th>Coût de Réparation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reparation in Model)
+            {
+                <tr>
+                    <td>@reparation.DateReparation</td>
+                    <td>@GetNomTypeReparation(reparation.VoitureId)</td>
+                    <td>@reparation.CoutReparation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucune réparation disponible.</p>
+}
+
+@functions {
+    public string GetNomTypeReparation(int typeReparationId)
+    {
+        Dictionary<int, string> typesReparation = new Dictionary<int, string>()
+        {
+            { 1, "Freins" },
+            { 2, "Huile" },
+            { 3, "Moteur" },
+            { 4, "Volant" },
+            { 5, "Peinture" }
+            // Ajoutez d'autres types de réparations si nécessaire
+        };
+
+        if (typesReparation.ContainsKey(typeReparationId))
+        {
+            return typesReparation[typeReparationId];
+        }
+
+        return "Type de réparation inconnu";
+    }
+}

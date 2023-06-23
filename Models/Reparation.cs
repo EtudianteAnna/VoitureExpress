@@ -13,7 +13,7 @@ namespace VoitureExpress.Models
 
         public decimal CoutReparation { get; set; }
         public string? Reparations{ get; set; }
-        public string? TypeIntervention { get; set; }
+        public string? TypeReparation { get; set; }
 
         [Required]
 

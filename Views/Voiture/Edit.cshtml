@@ -1,4 +1,4 @@
-﻿@model Voiture
+﻿@model VoitureExpress.Models.Voiture
 
 @{
     ViewData["Title"] = "Voiture et Réparations";
@@ -33,19 +33,26 @@
                 <th>Date de réparation</th>
                 <th>Type d'intervention</th>
                 <th>Coût de réparation</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Actions</th>
+                }
             </tr>
         </thead>
         <tbody>
-            @if (Model.ReparationVoiture != null && Model.ReparationVoiture.Count> 0)
+            @if (Model.ReparationVoiture != null && Model.ReparationVoiture.Count > 0)
             {
-             foreach (var reparation in Model.ReparationVoiture)
-              {
+                foreach (var reparation in Model.ReparationVoiture)
+                {
                     <tr>
                         <td>@reparation.DateReparation</td>
                         <td>@reparation.TypeIntervention</td>
+                        <td>@reparation.CoutReparation</td>
                         @if (User.IsInRole("Admin"))
                         {
-                            <td>@reparation.CoutReparation</td>
+                            <td>
+                                <a asp-action="EditReparationVoiture" asp-route-reparationId="@reparation.Id">Modifier</a>
+                            </td>
                         }
                     </tr>
                 }
@@ -53,12 +60,9 @@
             else
             {
                 <tr>
-                    <td colspan="3">Aucune réparation disponible.</td>
+                    <td colspan="4">Aucune réparation disponible.</td>
                 </tr>
-
             }
         </tbody>
     </table>
-<        </div>
-         
-                
+</div>

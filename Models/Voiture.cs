@@ -25,7 +25,7 @@ namespace VoitureExpress.Models
         public string? Reparations{ get; set; }
 
         // Propriété de navigation vers les réparations
-        public virtual ICollection<Reparation>? ReparationVoiture { get; set; }
+        public  ICollection<Reparation>? ReparationVoiture { get; set; }
         public void LoadReparation(IdentityDbContext context)
         {
             ReparationVoiture = context.Set<Reparation>()

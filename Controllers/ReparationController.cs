@@ -5,6 +5,7 @@ using VoitureExpress.Models;
 
 namespace VoitureExpress.Controllers
 {
+
     public class ReparationController : Controller
     {
         private readonly VoitureExpressContext _context;
@@ -15,7 +16,7 @@ namespace VoitureExpress.Controllers
         }
 
         // GET: Reparation
-        public IActionResult IndexReparationVoiture()
+        public IActionResult IndexReparation()
         {
             var reparations = _context.ReparationVoiture
                 .Include(r=> r.Voiture)
@@ -24,7 +25,15 @@ namespace VoitureExpress.Controllers
         
         }
 
+        public IActionResult ListeDesReparations(int Id_Voiture)
+        {
+            var reparations = _context.ReparationVoiture.Where(r=>r.VoitureId== Id_Voiture) 
 
+                .Include(r => r.Voiture)  
+                .ToList();
+            return View("IndexReparation",reparations);
+
+        }
         // GET: Reparation/Details/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
