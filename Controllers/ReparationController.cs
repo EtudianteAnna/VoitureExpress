@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using VoitureExpress.Migrations;
 using VoitureExpress.Models;
 
 namespace VoitureExpress.Controllers
@@ -56,31 +55,17 @@ namespace VoitureExpress.Controllers
             }
                    
             return View(reparation);
-        }
-
-        // GET: Reparation/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-            var voitures = _context.Voiture.ToList();
-            if (voitures == null)
-            {
-                return NotFound();
-            }
-            ViewBag.Voitures = new SelectList(voitures, "Id", "Marque"); // Sélection de la voiture par son identifiant et affichage du nom dans la liste déroulante
-            ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
-            return View("CreateReparationVoiture");
-        }
+        }              
 
         // POST: Reparation/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,DateReparation,CoutReparation,VoitureId,TypeReparation")] Reparation editedReparation)
+        public async Task<IActionResult> CreateReparationVoiture([Bind("Id,DateReparation,CoutReparation,VoitureId,TypeReparation")] Reparation editedReparation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(editedReparation);
+                _ = _context.Add(editedReparation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

@@ -1,33 +1,38 @@
 ﻿@model VoitureExpress.Models.Reparation
 
-<h2>Create Reparation</h2>
+@{
+    ViewData["Title"] = "Create Reparation Voiture";
+}
 
-<form asp-action="Create">
+<h2>Create Reparation Voiture</h2>
+
+<form asp-controller="Reparation" asp-action="CreateReparationVoiture" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <div class="form-group">
         <label asp-for="DateReparation" class="control-label"></label>
-        <input asp-for="DateReparation" class="form-control" />
+        <input asp-for="DateReparation" class="form-control" type="date" />
         <span asp-validation-for="DateReparation" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="TypeReparation" class="control-label"></label>
         <input asp-for="TypeReparation" class="form-control" />
         <span asp-validation-for="TypeReparation" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="CoutReparation" class="control-label"></label>
         <input asp-for="CoutReparation" class="form-control" />
         <span asp-validation-for="CoutReparation" class="text-danger"></span>
     </div>
 
-    <input type="hidden" asp-for="VoitureId" />
     <div class="form-group">
         <label for="VoitureId">Voiture:</label>
         @Html.DropDownList("VoitureId", ViewBag.Voitures as SelectList, "Sélectionnez une voiture", new { @class = "form-control" })
     </div>
-        
+
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
-
-    

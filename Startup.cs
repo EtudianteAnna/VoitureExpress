@@ -34,7 +34,7 @@ public class Startup
             });
         });
 
-        _ = services.AddDbContext<VoitureExpressContext>(options =>
+        services.AddDbContext<VoitureExpressContext>(options =>
             options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
     }
 
@@ -46,17 +46,26 @@ public class Startup
         app.UseAuthentication();
 
         // Activer le middleware d'autorisation
-        app.UseAuthorization();
+        _ = app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Accueil}/{id?}")
-                .RequireAuthorization("AdministratorOnly"); // Appliquer la politique d'autorisation aux endpoints
-        });
-    }
-}
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            endpoints.MapControllerRoute(
+                name: "reparation",
+                pattern: "Reparation/{action}/{id?}",
+                defaults: new { controller = "Reparation" });
+
+            endpoints.MapControllerRoute(
+                name: "createrereparationvoiture",
+                pattern: "Reparation/CreateReparationVoiture",
+                defaults: new { controller = "Reparation", action = "CreateReparationVoiture" });
+        });
+
+    }
+}    
 
 
