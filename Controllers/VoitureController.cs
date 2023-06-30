@@ -17,25 +17,25 @@ namespace VoitureExpress.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var voitures = await _context.Voiture.ToListAsync();
+            var voitures = await _context.Voitures.ToListAsync();
             return View("Index", voitures);
         }
 
         public async Task<IActionResult> Index0()
         {
-            return _context.Voiture != null ?
-                View(await _context.Voiture.ToListAsync()) :
+            return _context.Voitures != null ?
+                View(await _context.Voitures.ToListAsync()) :
                 Problem("Entity set 'ApplicationDbContext.Voiture' is null.");
         }
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Voiture == null)
+            if (id == null || _context.Voitures == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voiture.FirstOrDefaultAsync(m => m.Id == id);
+            var voiture = await _context.Voitures.FirstOrDefaultAsync(m => m.Id == id);
             if (voiture == null)
             {
                 return NotFound();
@@ -59,39 +59,26 @@ namespace VoitureExpress.Controllers
             if (ModelState.IsValid)
             {
                 // Exemple d'ajout d'une nouvelle réparation à la liste existante
-                voiture.ReparationVoiture.Add(new Reparation { DateReparation = DateTime.Now, TypeReparation = "Nouvelle intervention", CoutReparation = 100 });
-
+                
                 _context.Add(voiture);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(voiture);
         }
-
-        public async Task<IActionResult> Edit(int? id)
+                public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Voiture == null)
+            if (id == null || _context.Voitures == null)
             {
                 return NotFound();
             }
-            var voiture = await _context.Voiture.FindAsync(id);
+            var voiture = await _context.Voitures.FindAsync(id);
             if (voiture == null)
             {
                 return NotFound();
             }
-
-            // Effectuer les modifications souhaitées sur la voiture
-            voiture.Marque = "Nouvelle marque";
-            voiture.Modele = "Nouveau modèle";
-            voiture.Annee = 2023;
-            voiture.Finition = "Nouvelle finition";
-           
-            // ...
-
-            // Enregistrer les changements
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
+                        
+            return View (voiture);
         }
 
         [HttpPost]
@@ -129,18 +116,17 @@ namespace VoitureExpress.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Voiture == null)
+            if (id == null || _context.Voitures == null)
             {
                 return NotFound();
             }
 
-            var voiture = await _context.Voiture.FirstOrDefaultAsync(m => m.Id == id);
-            if (voiture == null)
+            var voiture = await _context.Voitures.FirstOrDefaultAsync(m => m.Id == id);
+            return voiture switch
             {
-                return NotFound();
-            }
-
-            return View(voiture);
+                null => NotFound(),
+                _ => View(voiture)
+            };
         }
 
         [Authorize]
@@ -148,14 +134,14 @@ namespace VoitureExpress.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Voiture == null)
+            if (_context.Voitures == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Voiture' is null.");
             }
-            var voiture = await _context.Voiture.FindAsync(id);
+            var voiture = await _context.Voitures.FindAsync(id);
             if (voiture != null)
             {
-                _context.Voiture.Remove(voiture);
+                _context.Voitures.Remove(voiture);
             }
 
             await _context.SaveChangesAsync();
@@ -164,11 +150,11 @@ namespace VoitureExpress.Controllers
 
         private bool VoitureExists(int id)
         {
-            return (_context.Voiture?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Voitures?.Any(e => e.Id == id)).GetValueOrDefault();
         }
         public async Task<IActionResult> Search(string searchString)
         {
-            var voitures = from v in _context.Voiture
+            var voitures = from v in _context.Voitures
                            select v;
 
             if (!String.IsNullOrEmpty(searchString))

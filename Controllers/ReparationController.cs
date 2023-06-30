@@ -19,16 +19,16 @@ namespace VoitureExpress.Controllers
         // GET: Reparation
         public IActionResult IndexReparation()
         {
-            var reparations = _context.ReparationVoiture
+            var reparations = _context.Reparations
                 .Include(r=> r.Voiture)
                 .ToList();
             return View(reparations);
         
         }
 
-        public IActionResult ListeDesReparations(int Id_Voiture)
+        public IActionResult ListeDesReparations(int id)
         {
-            var reparations = _context.ReparationVoiture.Where(r=>r.VoitureId== Id_Voiture) 
+            var reparations = _context.Reparations.Where(r=>r.VoitureId== id) 
 
                 .Include(r => r.Voiture)  
                 .ToList();
@@ -44,7 +44,7 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            Reparation reparation = await _context.ReparationVoiture
+            Reparation reparation = await _context.Reparations
                 .Include(r => r.Voiture)
     .FirstOrDefaultAsync(r => r.Id == id);
 
@@ -55,8 +55,20 @@ namespace VoitureExpress.Controllers
             }
                    
             return View(reparation);
-        }              
-
+        }
+        // GET: Reparation/Create
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()
+        {
+            var voitures = _context.Voitures.ToList();
+            if (voitures == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Voitures = new SelectList(voitures, "Id", "Marque"); // Sélection de la voiture par son identifiant et affichage du nom dans la liste déroulante
+            ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
+            return View("CreateReparationVoiture");
+        }
         // POST: Reparation/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,10 +79,10 @@ namespace VoitureExpress.Controllers
             {
                 _ = _context.Add(editedReparation);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexReparation));
             }
 
-            ViewBag.Voitures = new SelectList(_context.Voiture,"Id", "Marque"); // Sélection de la voiture par son identifiant et affichage du nom dans la liste déroulante
+            ViewBag.Voitures = new SelectList(_context.Voitures,"Id", "Marque"); // Sélection de la voiture par son identifiant et affichage du nom dans la liste déroulante
             ViewBag.TypesReparation = new List<string> { "Freins", "Autre" };
             return View("CreateReparationVoiture");
         }
@@ -84,12 +96,12 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var reparation = await _context.ReparationVoiture.FindAsync(id);
+            var reparation = await _context.Reparations.FindAsync(id);
             if (reparation == null)
             {
                 return NotFound();
             }
-            var voitures = await _context.Voiture.ToListAsync();
+            var voitures = await _context.Voitures.ToListAsync();
             if (voitures == null)
             {
                 return NotFound();
@@ -131,7 +143,7 @@ namespace VoitureExpress.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Voitures = _context.Voiture.ToList();
+            ViewBag.Voitures = _context.Voitures.ToList();
             return View(editedReparation);
         }
 
@@ -145,7 +157,7 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var reparation = await _context.ReparationVoiture
+            var reparation = await _context.Reparations
                 .Include(r => r.Voiture)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
@@ -163,20 +175,20 @@ namespace VoitureExpress.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int reparationId)
         {
-            var reparation = await _context.ReparationVoiture.FindAsync(reparationId);
+            var reparation = await _context.Reparations.FindAsync(reparationId);
             if (reparation == null)
             {
                 return NotFound();
             }
 
-            _context.ReparationVoiture.Remove(reparation);
+            _context.Reparations.Remove(reparation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReparationExists(int id)
         {
-            return _context.ReparationVoiture != null && _context.ReparationVoiture.Any(r => r.Id == id);
+            return _context.Reparations != null && _context.Reparations.Any(r => r.Id == id);
         }
     }
 }

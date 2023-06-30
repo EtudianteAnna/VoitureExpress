@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace VoitureExpress.Migrations
 {
     [DbContext(typeof(VoitureExpressContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230630120756_jointure")]
+    partial class jointure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,11 +249,16 @@ namespace VoitureExpress.Migrations
                     b.Property<int>("VoitureId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VoitureId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("VoitureId");
 
-                    b.ToTable("Reparations");
+                    b.HasIndex("VoitureId1");
+
+                    b.ToTable("ReparationVoiture");
                 });
 
             modelBuilder.Entity("VoitureExpress.Models.Voiture", b =>
@@ -292,7 +299,7 @@ namespace VoitureExpress.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Voitures");
+                    b.ToTable("Voiture");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -349,10 +356,14 @@ namespace VoitureExpress.Migrations
             modelBuilder.Entity("VoitureExpress.Models.Reparation", b =>
                 {
                     b.HasOne("VoitureExpress.Models.Voiture", "Voiture")
-                        .WithMany("ReparationVoiture")
+                        .WithMany()
                         .HasForeignKey("VoitureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("VoitureExpress.Models.Voiture", null)
+                        .WithMany("ReparationVoiture")
+                        .HasForeignKey("VoitureId1");
 
                     b.Navigation("Voiture");
                 });

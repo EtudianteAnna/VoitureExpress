@@ -12,7 +12,7 @@ namespace VoitureExpress.Models
         public DateTime DateReparation { get; set; }
 
         public decimal CoutReparation { get; set; }
-        public string? Reparations{ get; set; }
+        public string? Reparations { get; set; }
         public string? TypeReparation { get; set; }
 
         [Required]
