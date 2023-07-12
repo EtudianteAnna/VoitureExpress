@@ -28,7 +28,7 @@ namespace VoitureExpress.Controllers
 
         public IActionResult ListeDesReparations(int id)
         {
-            var reparations = _context.Reparations.Where(r=>r.VoitureId== id) 
+            var reparations = _context.Reparations.Where(r => r.VoitureId == id)
 
                 .Include(r => r.Voiture)  
                 .ToList();

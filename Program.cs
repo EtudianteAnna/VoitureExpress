@@ -53,7 +53,8 @@ namespace VoitureExpress
                     adminUser = new IdentityUser
                     {
                         UserName = adminEmail,
-                        Email = adminEmail
+                        Email = adminEmail,
+                        EmailConfirmed=true
                     };
 
                     await userManager.CreateAsync(adminUser, "AdminPassword123!");
@@ -70,7 +71,7 @@ namespace VoitureExpress
             app.UseAuthorization();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Voiture}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Accueil}/{id?}");
             app.MapRazorPages();
             app.Run();
         }

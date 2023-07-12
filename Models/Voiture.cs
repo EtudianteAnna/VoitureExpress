@@ -13,17 +13,17 @@ namespace VoitureExpress.Models
         [Column("VoitureId")]
         public int Id { get; set; }
 
-        public string Marque { get; set; }
+        public string? Marque { get; set; }
         public string Modele { get; set; }
         public int Annee { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateAchat { get; set; }
-        public string Finition { get; set; }
+        public string? Finition { get; set; }
         public decimal PrixDeVente { get; set; }
-        public string Disponibilite { get; set; }
+        public string? Disponibilite { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateDeVente { get; set; }
-        public string Reparations{ get; set; }
+        public string? Reparations { get; set; }
 
         // Propriété de navigation vers les réparations
         public  ICollection<Reparation>? ReparationVoiture { get; set; }

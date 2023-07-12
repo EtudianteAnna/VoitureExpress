@@ -17,7 +17,7 @@ namespace VoitureExpress.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var voitures = await _context.Voitures.ToListAsync();
+            var voitures = _context.Voitures != null ? await _context.Voitures.ToListAsync() : new List<Voiture>();
             return View("Index", voitures);
         }
 
@@ -35,7 +35,8 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var voiture = await _context.Voitures.FirstOrDefaultAsync(m => m.Id == id);
+            var voiture = await _context.Voitures.Include(v => v.ReparationVoiture).FirstOrDefaultAsync(m => m.Id == id);
+
             if (voiture == null)
             {
                 return NotFound();
@@ -72,7 +73,7 @@ namespace VoitureExpress.Controllers
             {
                 return NotFound();
             }
-            var voiture = await _context.Voitures.FindAsync(id);
+            var voiture = await _context.Voitures.Include(v => v.ReparationVoiture).FirstOrDefaultAsync(m => m.Id == id);
             if (voiture == null)
             {
                 return NotFound();
@@ -121,7 +122,7 @@ namespace VoitureExpress.Controllers
                 return NotFound();
             }
 
-            var voiture = await _context.Voitures.FirstOrDefaultAsync(m => m.Id == id);
+            var voiture = await _context.Voitures.Include(v => v.ReparationVoiture).FirstOrDefaultAsync(m => m.Id == id);
             return voiture switch
             {
                 null => NotFound(),
